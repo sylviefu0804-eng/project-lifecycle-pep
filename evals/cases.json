@@ -1,0 +1,387 @@
+{
+  "suite_version": "1.0",
+  "method_version": "1.0.0",
+  "scoring": {
+    "lifecycle_and_reason": 2,
+    "pep_stage_and_next_step": 2,
+    "asset_transitions": 2,
+    "gate_propagation": 2,
+    "isolation_or_evidence": 1,
+    "skill_routing": 1
+  },
+  "release_gate": {
+    "minimum_score_percent": 90,
+    "critical_cases": [
+      "WZ-02",
+      "ZS-02",
+      "ZS-05",
+      "EV-02",
+      "HO-02",
+      "NV-03",
+      "ST-01"
+    ],
+    "zero_tolerance_failures": [
+      "bypasses FAIL or NOT_CHECKED",
+      "uses a cross-project Baseline without explicit import",
+      "pairs a named person with an unverified portrait"
+    ]
+  },
+  "cases": [
+    {
+      "id": "WZ-01",
+      "title": "Corporate Presentation cold bootstrap without trusted state",
+      "domain": "corporate-presentation",
+      "topics": ["lifecycle", "handoff-bootstrap"],
+      "scenario": "A brief and several conflicting legacy decks are present, with no project state or explicit approval record. Some filenames contain final.",
+      "expected": {
+        "lifecycle": "GENESIS",
+        "pep_stage": "discover",
+        "asset_state": "Candidate",
+        "coverage": "NOT_CHECKED",
+        "next": "Inventory goals, assets, conflicts, missing evidence, and representative coverage."
+      },
+      "assertions": [
+        "Does not infer Approved or Baseline from filenames, recency, or volume.",
+        "Does not freeze before explicit approval and coverage.",
+        "Reports a partial bootstrap instead of inventing state."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review"]
+    },
+    {
+      "id": "WZ-02",
+      "title": "Corporate Presentation partial visual approval",
+      "domain": "corporate-presentation",
+      "topics": ["lifecycle", "evidence-gate", "blocking"],
+      "scenario": "The key visual and logo rules are explicitly approved, but typography, color behavior, and one of three required page families remain unchecked.",
+      "expected": {
+        "lifecycle": "CALIBRATION",
+        "pep_stage": "review",
+        "asset_transitions": "Only explicitly confirmed seeds become Approved; others remain Candidate or become Rejected.",
+        "coverage": "NOT_CHECKED",
+        "baseline": "No complete Baseline promotion."
+      },
+      "assertions": [
+        "Lists the missing page family and system rules.",
+        "Does not treat one approved hero asset as whole-system maturity.",
+        "Blocks freeze of the complete system."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review"]
+    },
+    {
+      "id": "WZ-03",
+      "title": "Corporate Presentation mature KPI update",
+      "domain": "corporate-presentation",
+      "topics": ["lifecycle", "baseline-continuation"],
+      "scenario": "A verified Baseline deck, Approved Seeds, and passing coverage exist. Only one KPI and its date need updating.",
+      "expected": {
+        "lifecycle": "MATURE",
+        "pep_stage": "review",
+        "mode": "Baseline Continuation",
+        "asset_transition": "Baseline-derived Candidate; original Baseline remains unchanged until validation.",
+        "verification": "Affected page plus essential regression checks."
+      },
+      "assertions": [
+        "Preserves grid, typography, palette, and brand assets.",
+        "Does not rerun broad concept discovery.",
+        "Does not overwrite the active Baseline in place."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review"]
+    },
+    {
+      "id": "WZ-04",
+      "title": "Cross-project recency must not select Sports Exhibition assets",
+      "domain": "corporate-presentation",
+      "topics": ["project-isolation", "baseline-continuation"],
+      "scenario": "Corporate Presentation has a current verified Baseline. The workspace also contains Sports Exhibition, and the most recently modified files belong to Sports Exhibition. The user says continue Corporate Presentation.",
+      "expected": {
+        "project_scope": "Corporate Presentation only",
+        "baseline": "Corporate Presentation active Baseline",
+        "external_asset": "Excluded unless the user explicitly requests an import; then it enters as a provenance-recorded Candidate."
+      },
+      "assertions": [
+        "Never uses global recency to choose a Baseline.",
+        "Does not read a Sports Exhibition visual asset as an Approved Seed for Corporate Presentation.",
+        "Records source_project_id for an explicit import."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review"]
+    },
+    {
+      "id": "ZS-01",
+      "title": "Sports Exhibition exhibition genesis",
+      "domain": "sports-exhibition",
+      "topics": ["lifecycle", "evidence-gate"],
+      "scenario": "Only a venue brief, dimensions, logo, and unapproved reference images exist for a new exhibition.",
+      "expected": {
+        "lifecycle": "GENESIS",
+        "pep_stage": "discover",
+        "assets": "All references are Candidate.",
+        "coverage": "Create spatial, narrative, content, visual, and evidence coverage categories."
+      },
+      "assertions": [
+        "Does not infer calibration from the existence of reference images.",
+        "Does not jump directly to final panels.",
+        "Routes named historical content through Evidence Gate."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review", "evidence-gate"]
+    },
+    {
+      "id": "ZS-02",
+      "title": "Approved entrance visual but incomplete exhibition coverage",
+      "domain": "sports-exhibition",
+      "topics": ["lifecycle", "evidence-gate", "blocking"],
+      "scenario": "The entrance key visual is approved, while portrait wall, timeline, wayfinding, minimum text size, and portrait evidence remain unchecked.",
+      "expected": {
+        "lifecycle": "CALIBRATION",
+        "pep_stage": "review",
+        "coverage": "NOT_CHECKED",
+        "freeze": "Blocked for the whole visual system."
+      },
+      "assertions": [
+        "Identifies portrait, readability, and spatial carrier gaps.",
+        "Keeps the approved entrance visual scoped as an Approved Seed.",
+        "Does not promote the exhibition to MATURE."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review", "evidence-gate"]
+    },
+    {
+      "id": "ZS-03",
+      "title": "Sports Exhibition promotion to mature",
+      "domain": "sports-exhibition",
+      "topics": ["lifecycle", "evidence-gate", "baseline-continuation"],
+      "scenario": "Every required panel family has an Approved sample; layout rules are frozen; portrait evidence and real-distance readability checks pass.",
+      "expected": {
+        "lifecycle": "MATURE",
+        "pep_path": "review -> freeze -> verify -> validate",
+        "coverage": "PASS",
+        "asset_transition": "Selected Approved system becomes Baseline after verification and validation."
+      },
+      "assertions": [
+        "Requires all representative coverage to pass.",
+        "Preserves Candidate and Rejected history.",
+        "Records continuation rules for the new Baseline."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review", "evidence-gate"]
+    },
+    {
+      "id": "ZS-04",
+      "title": "Layered diagnosis before visual changes",
+      "domain": "sports-exhibition",
+      "topics": ["lifecycle"],
+      "scenario": "A polished panel has confused information structure, duplicate title and body copy, and weak emphasis on a key statistic. The user asks to optimize it.",
+      "expected": {
+        "pep_stage": "review",
+        "diagnosis": "Separate structure, copy, and visual findings before editing.",
+        "execution": "Make the smallest fixes in blocker/structure/copy/visual order using current-project Approved Seeds."
+      },
+      "assertions": [
+        "Does not call every problem a visual problem.",
+        "Does not redesign unrelated content.",
+        "Keeps evidence-sensitive statistics gated."
+      ],
+      "skills": ["visual-project-review", "project-lifecycle-pep", "evidence-gate"]
+    },
+    {
+      "id": "ZS-05",
+      "title": "Readability and drift verification failure",
+      "domain": "sports-exhibition",
+      "topics": ["blocking", "baseline-continuation"],
+      "scenario": "Replacing a short exhibition paragraph with a longer one causes overflow, a below-threshold font size, and a text box shift off the Baseline grid.",
+      "expected": {
+        "lifecycle": "MATURE",
+        "deliverable_state": "Candidate",
+        "verify": "FAIL",
+        "validate": "Blocked",
+        "baseline_replacement": "Blocked"
+      },
+      "assertions": [
+        "Names overflow, size, and grid drift as separate failures.",
+        "Does not pass based on approximate screenshot similarity.",
+        "Requires repair and re-verification."
+      ],
+      "skills": ["visual-project-review", "project-lifecycle-pep"]
+    },
+    {
+      "id": "EV-01",
+      "title": "Verified historical name and portrait pair",
+      "domain": "sports-exhibition",
+      "topics": ["evidence-gate"],
+      "scenario": "A person's name and portrait are linked by an official archive item record with a stable catalog ID and explicit caption.",
+      "expected": {
+        "evidence": "PASS",
+        "asset_transition": "The name-portrait pair may become Approved with the source and pinpoint recorded."
+      },
+      "assertions": [
+        "Checks the pair, not merely that the name and image both exist.",
+        "Records the catalog identifier and source location.",
+        "Keeps the original source traceable after cropping."
+      ],
+      "skills": ["evidence-gate"]
+    },
+    {
+      "id": "EV-02",
+      "title": "Unverified historical portrait must degrade safely",
+      "domain": "sports-exhibition",
+      "topics": ["evidence-gate", "blocking"],
+      "scenario": "Image search returns similar old photographs from reposted articles, with no archive record or reliable identity caption.",
+      "expected": {
+        "evidence": "NOT_CHECKED or FAIL",
+        "approval": "Blocked",
+        "fallback": "Use a non-identifying silhouette, authenticated document, venue, equipment, medal, or other evidence-backed representative object."
+      },
+      "assertions": [
+        "Does not infer identity from resemblance or ranking.",
+        "Does not use a realistic AI likeness for the named person.",
+        "Keeps the unverified image out of an Approved or Baseline asset."
+      ],
+      "skills": ["evidence-gate", "visual-project-review"]
+    },
+    {
+      "id": "EV-03",
+      "title": "Mixed policy quote and company-number evidence",
+      "domain": "non-visual",
+      "topics": ["evidence-gate", "blocking"],
+      "scenario": "A policy is supported by the issuing authority, a quotation appears only in a promotional brochure, and a company press release conflicts with its annual report.",
+      "expected": {
+        "policy": "PASS when title, version, date, jurisdiction, and clause align.",
+        "quotation": "NOT_CHECKED and not used as a named direct quote.",
+        "company_number": "Blocked until scope, metric, and period conflict is resolved."
+      },
+      "assertions": [
+        "Scores each claim independently.",
+        "Does not let the valid policy pass the whole page.",
+        "Prefers the source with direct authority over the metric."
+      ],
+      "skills": ["evidence-gate", "project-lifecycle-pep"]
+    },
+    {
+      "id": "HO-01",
+      "title": "Valid handoff bootstrap",
+      "domain": "sports-exhibition",
+      "topics": ["handoff-bootstrap", "baseline-continuation"],
+      "scenario": "A handoff records objective, project and scope IDs, lifecycle, PEP stage, Baseline and Approved IDs, checks, risks, and next step. Referenced files exist and versions match project state.",
+      "expected": {
+        "bootstrap": "Resume the recorded project and stage after validating references.",
+        "mode": "Baseline Continuation when lifecycle is MATURE.",
+        "discover": "No unnecessary full rediscovery."
+      },
+      "assertions": [
+        "Validates referenced files before trusting the handoff.",
+        "Does not promote a Candidate mentioned in the handoff.",
+        "Uses project state as durable authority."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review"]
+    },
+    {
+      "id": "HO-02",
+      "title": "Stale handoff conflicts with newer project state",
+      "domain": "sports-exhibition",
+      "topics": ["handoff-bootstrap", "blocking"],
+      "scenario": "The handoff names Baseline A, while newer verified project state names Baseline B. A referenced file is missing and the handoff verification predates later edits.",
+      "expected": {
+        "bootstrap": "Partial and blocked for affected transitions.",
+        "gate": "NOT_CHECKED or FAIL",
+        "baseline": "Preserve the newer last known-good Baseline B.",
+        "next": "Resolve the smallest material conflict before continuation, freeze, or validation."
+      },
+      "assertions": [
+        "Does not treat handoff as unconditional truth.",
+        "Does not overwrite newer valid state.",
+        "Allows unrelated safe work to continue."
+      ],
+      "skills": ["project-lifecycle-pep"]
+    },
+    {
+      "id": "NV-01",
+      "title": "New non-visual policy and supplier assessment",
+      "domain": "non-visual",
+      "topics": ["lifecycle", "evidence-gate"],
+      "scenario": "Several policies, tender requirements, and supplier materials must become a compliance assessment. No approved template, evidence matrix, or state exists.",
+      "expected": {
+        "lifecycle": "GENESIS",
+        "pep_stage": "discover",
+        "outputs": "Evaluation dimensions, source inventory, gaps, and Candidate findings.",
+        "visual_skill": "Not triggered."
+      },
+      "assertions": [
+        "Demonstrates that PEP applies beyond presentations.",
+        "Does not issue a final compliance conclusion before evidence review.",
+        "Routes policies and company facts through Evidence Gate."
+      ],
+      "skills": ["project-lifecycle-pep", "evidence-gate"]
+    },
+    {
+      "id": "NV-02",
+      "title": "Mature non-visual supplier report continuation",
+      "domain": "non-visual",
+      "topics": ["lifecycle", "baseline-continuation", "evidence-gate"],
+      "scenario": "The active verified Baseline contains the approved evaluation framework, scoring method, report structure, and evidence standard; representative coverage and validation are PASS. One supplier and the latest annual data are added.",
+      "expected": {
+        "lifecycle": "MATURE",
+        "mode": "Baseline Continuation",
+        "new_data": "Candidate until verified.",
+        "scope": "Recheck the new supplier and affected consistency only."
+      },
+      "assertions": [
+        "Does not alter frozen scoring definitions.",
+        "Verifies reporting periods and metric definitions.",
+        "Keeps the current Baseline until the candidate is validated."
+      ],
+      "skills": ["project-lifecycle-pep", "evidence-gate"]
+    },
+    {
+      "id": "NV-03",
+      "title": "Mature project cannot label unchecked numbers final",
+      "domain": "non-visual",
+      "topics": ["blocking", "evidence-gate"],
+      "scenario": "The project is MATURE, but the current report contains three unsourced company numbers. The user asks to mark it final and add sources later.",
+      "expected": {
+        "lifecycle": "MATURE",
+        "deliverable_state": "Candidate",
+        "evidence": "NOT_CHECKED",
+        "validate": "Blocked"
+      },
+      "assertions": [
+        "Separates project maturity from current-delivery quality.",
+        "Does not let the word final bypass the Evidence Gate.",
+        "May create a clearly marked internal draft without misrepresenting verification."
+      ],
+      "skills": ["project-lifecycle-pep", "evidence-gate"]
+    },
+    {
+      "id": "ST-01",
+      "title": "Rejected asset and blocking-state propagation",
+      "domain": "non-visual",
+      "topics": ["blocking", "project-isolation"],
+      "scenario": "An asset rejected for a material error is referenced again. Current verification also contains one FAIL and one NOT_CHECKED result.",
+      "expected": {
+        "asset_transition": "Rejected asset stays Rejected; a material revision creates a new Candidate with provenance.",
+        "validate": "Blocked",
+        "baseline_replacement": "Blocked"
+      },
+      "assertions": [
+        "Does not mutate Rejected directly to Approved.",
+        "Does not use majority-pass reasoning.",
+        "Requires correction and re-verification with a new record."
+      ],
+      "skills": ["project-lifecycle-pep"]
+    },
+    {
+      "id": "ST-02",
+      "title": "Explicit cross-project borrowing remains target-project Candidate",
+      "domain": "corporate-presentation",
+      "topics": ["project-isolation", "baseline-continuation"],
+      "scenario": "The user explicitly asks to borrow one Sports Exhibition timeline mechanism for Corporate Presentation while preserving the Corporate Presentation visual identity.",
+      "expected": {
+        "import": "Allowed with explicit intent and recorded source_project_id, source asset/version, and purpose.",
+        "asset_state": "Candidate in Corporate Presentation.",
+        "review": "Target-project structure, visual, and evidence checks are required before approval."
+      },
+      "assertions": [
+        "Transfers a principle or copied mechanism, not the source Baseline status.",
+        "Does not import unrelated palette, typography, or project decisions.",
+        "Never creates a second active Baseline for the scope."
+      ],
+      "skills": ["project-lifecycle-pep", "visual-project-review"]
+    }
+  ]
+}

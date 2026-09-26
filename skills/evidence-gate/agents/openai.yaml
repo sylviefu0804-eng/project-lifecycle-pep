@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evidence Gate"
+  short_description: "Verify identities, claims, quotes, and sources"
+  default_prompt: "Use $evidence-gate to verify the people and claims in this project."

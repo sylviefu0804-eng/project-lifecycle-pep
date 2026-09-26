@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual Project Review"
+  short_description: "Review visual projects before editing"
+  default_prompt: "Use $visual-project-review to diagnose this deck before making changes."

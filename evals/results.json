@@ -1,0 +1,65 @@
+{
+  "run_at": "2026-09-26",
+  "candidate_version": "1.0.0-rc.1",
+  "record_type": "historical_authoring_session_summary",
+  "method": "Scenario-based agent responses reviewed in the original authoring conversation. Evaluators shared prior task context and one had helped design the cases. This was not an independent blind evaluation or a replay of real project artifacts.",
+  "historically_reported_structural_checks": {
+    "skill_quick_validate": "PASS (3/3)",
+    "plugin_validate": "PASS",
+    "project_state_validator_tests": "PASS (3/3)",
+    "eval_suite_schema": "PASS",
+    "python_compile": "PASS"
+  },
+  "historically_reported_behavioral_result": {
+    "cases_run": 19,
+    "cases_passed": 19,
+    "points_awarded": 190,
+    "points_available": 190,
+    "score_percent": 100,
+    "critical_cases_passed": 7,
+    "zero_tolerance_failures": 0
+  },
+  "prompt_corrections": [
+    {
+      "id": "WZ-04",
+      "finding": "The original scenario did not say whether Corporate Presentation had a Baseline, so the evaluator correctly refused to infer one.",
+      "correction": "State that a current verified Corporate Presentation Baseline exists; the rerun used it and rejected recent Sports Exhibition files."
+    },
+    {
+      "id": "NV-02",
+      "finding": "Approved framework components alone do not prove MATURE or Baseline Continuation.",
+      "correction": "State that the framework is the active verified Baseline with representative coverage and validation PASS; the rerun classified MATURE and continued from it."
+    }
+  ],
+  "cases": [
+    {"id": "WZ-01", "status": "PASS", "score": 10},
+    {"id": "WZ-02", "status": "PASS", "score": 10},
+    {"id": "WZ-03", "status": "PASS", "score": 10},
+    {"id": "WZ-04", "status": "PASS_AFTER_PROMPT_CLARIFICATION", "score": 10},
+    {"id": "ZS-01", "status": "PASS", "score": 10},
+    {"id": "ZS-02", "status": "PASS", "score": 10},
+    {"id": "ZS-03", "status": "PASS", "score": 10},
+    {"id": "ZS-04", "status": "PASS", "score": 10},
+    {"id": "ZS-05", "status": "PASS", "score": 10},
+    {"id": "EV-01", "status": "PASS", "score": 10},
+    {"id": "EV-02", "status": "PASS", "score": 10},
+    {"id": "EV-03", "status": "PASS", "score": 10},
+    {"id": "HO-01", "status": "PASS", "score": 10},
+    {"id": "HO-02", "status": "PASS", "score": 10},
+    {"id": "NV-01", "status": "PASS", "score": 10},
+    {"id": "NV-02", "status": "PASS_AFTER_PROMPT_CLARIFICATION", "score": 10},
+    {"id": "NV-03", "status": "PASS", "score": 10},
+    {"id": "ST-01", "status": "PASS", "score": 10},
+    {"id": "ST-02", "status": "PASS", "score": 10}
+  ],
+  "historical_release_decision": "PROMOTE_TO_1.0.0",
+  "limitations": [
+    "The perfect score is the original author's reported assessment, not a reproducible measurement or certification.",
+    "Raw model responses and complete evaluator metadata were not retained in this repository, so these scores cannot be independently recomputed here.",
+    "One evaluator had designed the cases and both received earlier conversation context; intended answers were therefore not fully blinded.",
+    "Two scenarios were clarified and rerun during authoring; case-specific scores were assigned manually.",
+    "Private real-project validation is user-reported methodology experience, not independently inspected project evidence in this repository.",
+    "Project-specific readability thresholds and coverage dimensions still require project evidence.",
+    "The first live use after installation should confirm trigger routing alongside existing presentation skills."
+  ]
+}

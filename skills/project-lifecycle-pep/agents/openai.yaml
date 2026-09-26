@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Lifecycle + PEP"
+  short_description: "Run staged projects with governed baselines"
+  default_prompt: "Use $project-lifecycle-pep to classify this project and continue it safely."

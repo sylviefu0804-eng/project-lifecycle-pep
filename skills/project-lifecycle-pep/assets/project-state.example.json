@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "example-project",
+    "name": "Example Project",
+    "scope_id": "main",
+    "visual_system_id": null
+  },
+  "lifecycle": {
+    "state": "GENESIS",
+    "reason": "No approved baseline exists for this scope.",
+    "classified_at": "2026-01-01T00:00:00Z"
+  },
+  "current_work": {
+    "pep_stage": "discover",
+    "required_gates": {
+      "coverage": "NOT_CHECKED",
+      "verify": "NOT_CHECKED",
+      "validate": "NOT_CHECKED"
+    },
+    "blockers": []
+  },
+  "assets": [],
+  "baseline": {
+    "active_asset_id": null,
+    "qualification": {
+      "coverage": "NOT_CHECKED",
+      "verify": "NOT_CHECKED",
+      "validate": "NOT_CHECKED"
+    },
+    "continuation_rules": []
+  },
+  "coverage": [],
+  "handoff": {
+    "path": null,
+    "version": null
+  },
+  "history": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "project-lifecycle-pep",
+  "version": "1.0.0",
+  "description": "Govern long-running projects with Project Lifecycle, PEP, visual review, and evidence gates.",
+  "author": {
+    "name": "Sylvie Fu"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Project Lifecycle + PEP",
+    "shortDescription": "Govern project maturity, baselines, visuals, and evidence.",
+    "longDescription": "A skills-only project operating system for lifecycle classification, PEP gates, baseline continuation, visual review, and evidence-safe historical or corporate content.",
+    "developerName": "Sylvie Fu",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Classify this project's lifecycle and continue it with PEP.",
+      "Review this visual project before making changes.",
+      "Verify the people, claims, and source evidence in this project."
+    ]
+  }
+}
