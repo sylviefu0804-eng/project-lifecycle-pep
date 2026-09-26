@@ -4,7 +4,7 @@
 
 A personal Codex skill package for project maturity, baseline continuation, visual review, and evidence verification.
 
-版本：**1.0.0**。当前发布目标为私有 GitHub 仓库。
+版本：**1.0.0**。公开发布的通用方法论包。
 
 ## 包含的三个 Skill
 
@@ -46,7 +46,7 @@ A personal Codex skill package for project maturity, baseline continuation, visu
 
 ### 从 GitHub 安装三个 Skill
 
-在能够访问本私有仓库的 Codex 环境中，提供本仓库链接和需要的提交或标签，然后请求：
+在 Codex 中，提供本仓库链接和需要的提交或标签，然后请求：
 
 ```text
 使用 $skill-installer，先审查此仓库，再从指定提交安装：
@@ -55,7 +55,7 @@ skills/visual-project-review
 skills/evidence-gate
 ```
 
-私有仓库需要使用者自己的 GitHub 访问权限。安装完成后，在新任务中使用这些 Skill。默认允许自动选择；也可以显式调用。
+本仓库公开可见。安装完成后，在新任务中使用这些 Skill。默认允许自动选择；也可以显式调用。
 
 ### 作为一个 Plugin 安装
 
@@ -103,10 +103,14 @@ python3 scripts/validate_eval_suite.py evals/cases.json
 
 这套 Plugin 提供方法和验证辅助，没有 MCP 服务、自动执行 hooks、联网脚本或新增工具权限。
 
+本仓库不包含客户名称、客户偏好、品牌画像、专属图片生成提示词或项目素材。视觉规则要求从使用者当前项目读取 Approved Seeds 和 Baseline，不在 Skill 中内置任何客户的视觉方案。唯一的 `assets/` 文件是通用项目状态模板。
+
+实际项目的状态、证据清单、审批记录、图片和交接文件应保存在各自项目内，不应提交回这个公开方法论仓库。
+
 Handoff 文件可以由项目自行维护；核心 Skill 会检查其与当前状态是否一致。第三方 Handoff Skill 及其安装器、安全审查材料不在本包内。
 
 后续新增领域能力时，在 `skills/` 下增加独立目录，并补充对应 eval；修改状态语义或门控规则时应重新验证已有案例。
 
 ## 许可证
 
-当前为私有项目，尚未选择开源许可证。是否公开以及采用何种许可证，由项目所有者后续决定。
+尚未选择开源许可证。本次公开仅改变仓库可见性，不额外授予开源许可；采用何种许可证，由项目所有者后续决定。
